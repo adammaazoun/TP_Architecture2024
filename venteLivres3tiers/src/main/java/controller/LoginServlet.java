@@ -11,6 +11,7 @@ import model.Client;
 /**
  * Servlet implementation class LoginServlet
  */
+@WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -34,7 +35,16 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String login = request.getParameter("login");
+		String mdp = request.getParameter("mdp");
+		if (Client.verifClient(login,mdp)) {
+			response.sendRedirect("DisplayClientServlet");
+			
+		}
+		else {
+			response.getWriter().write("wrong credentials");
+			request.getRequestDispatcher("index.html").include(request,response);
+		}
 	}
 
 }

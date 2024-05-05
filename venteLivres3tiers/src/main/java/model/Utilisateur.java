@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import controller.Connexion;
+
 public abstract class Utilisateur {
     public String login = "";
     public String mdp = "";
