@@ -42,12 +42,12 @@ public class GUIAdmin {
         }
         // Example book data
         frame = new JFrame();
-        frame.setBounds(100, 100, 521, 506);
+        frame.setBounds(100, 100, 801, 506);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
         JPanel panel = new JPanel();
-        panel.setBounds(10, 59, 441, 281);
+        panel.setBounds(10, 59, 765, 301);
         frame.getContentPane().add(panel);
         panel.setLayout(null);
 
@@ -79,7 +79,7 @@ public class GUIAdmin {
         panel.add(btnNewButton);
 
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(10, 81, 421, 189);
+        scrollPane.setBounds(10, 81, 745, 209);
         panel.add(scrollPane);
 
         tableModel = new BookTableModel(bookData);
@@ -88,7 +88,7 @@ public class GUIAdmin {
 
         JLabel lblNewLabel_2 = new JLabel("Admin");
         lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 23));
-        lblNewLabel_2.setBounds(216, 11, 114, 22);
+        lblNewLabel_2.setBounds(353, 26, 114, 22);
         frame.getContentPane().add(lblNewLabel_2);
 
         JButton btnNewButton_1 = new JButton("add book");

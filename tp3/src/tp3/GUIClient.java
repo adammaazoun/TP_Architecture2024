@@ -33,7 +33,15 @@ public class GUIClient {
 			e.printStackTrace();
 		}
     }
-
+    public void refreshTable2() {
+        try {
+            ArrayList<String[]> bookDetailData = Client.mylist("amin.karray"); // Update the list of ordered books
+            tableModel2 = new BookTableModel(bookDetailData); // Set the updated data to the table model
+            tableModel2.fireTableDataChanged(); // Notify the table about the data change
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+}
     /**
      * Initialize the contents of the frame.
      * @throws SQLException 
@@ -46,13 +54,13 @@ public class GUIClient {
         	bookData = Utilisateur.chercher_livre(s);
         }
         frame = new JFrame();
-        frame.setBounds(100, 100, 900, 500);
+        frame.setBounds(100, 100, 1078, 503);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
         // First Panel
         JPanel panel1 = new JPanel();
-        panel1.setBounds(10, 10, 400, 430);
+        panel1.setBounds(10, 10, 525, 430);
         frame.getContentPane().add(panel1);
         panel1.setLayout(null);
 
@@ -61,7 +69,7 @@ public class GUIClient {
         panel1.add(lblNewLabel1);
 
         textField = new JTextField();
-        textField.setBounds(170, 10, 150, 20);
+        textField.setBounds(133, 7, 254, 20);
         panel1.add(textField);
         textField.setColumns(10);
 
@@ -70,7 +78,7 @@ public class GUIClient {
         panel1.add(lblNewLabel1_1);
 
         JScrollPane scrollPane1 = new JScrollPane();
-        scrollPane1.setBounds(10, 60, 380, 300);
+        scrollPane1.setBounds(10, 60, 505, 300);
         panel1.add(scrollPane1);
 
         tableModel1 = new BookTableModel(bookData);
@@ -78,6 +86,17 @@ public class GUIClient {
         scrollPane1.setViewportView(table1);
 
         JButton btnNewButton1 = new JButton("Order book");
+        btnNewButton1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                try {
+                    Client.addToList(textField_1.getText(),name);
+                    // Update the table after adding a book
+                    GUIClient n=new GUIClient(null,name);
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
         btnNewButton1.setBounds(237, 371, 150, 30);
         panel1.add(btnNewButton1);
         
@@ -90,10 +109,19 @@ public class GUIClient {
         lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
         lblNewLabel.setBounds(13, 380, 63, 14);
         panel1.add(lblNewLabel);
+        
+        JButton btnNewButton = new JButton("Search");
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		new GUIClient(textField.getText(),"amin.karray");
+        	}
+        });
+        btnNewButton.setBounds(414, 6, 89, 23);
+        panel1.add(btnNewButton);
 
         // Second Panel
         JPanel panel2 = new JPanel();
-        panel2.setBounds(420, 10, 450, 430);
+        panel2.setBounds(545, 10, 507, 430);
         frame.getContentPane().add(panel2);
         panel2.setLayout(null);
 
@@ -102,14 +130,12 @@ public class GUIClient {
         panel2.add(lblNewLabel2);
 
         JScrollPane scrollPane2 = new JScrollPane();
-        scrollPane2.setBounds(10, 30, 430, 390);
+        scrollPane2.setBounds(10, 30, 487, 390);
         panel2.add(scrollPane2);
 
-        List<String[]> bookDetailData = new ArrayList<>();
+        
         // Example book detail data
-        bookDetailData.add(new String[]{"ISBN1", "Title 1", "Author 1", "2000", "10", "Description 1"});
-        bookDetailData.add(new String[]{"ISBN2", "Title 2", "Author 2", "2001", "15", "Description 2"});
-        bookDetailData.add(new String[]{"ISBN3", "Title 3", "Author 3", "2002", "20", "Description 3"});
+        ArrayList<String[]> bookDetailData = Client.mylist(name);
 
         tableModel2 = new BookTableModel(bookDetailData);
         table2 = new JTable(tableModel2);
@@ -155,5 +181,5 @@ public class GUIClient {
         public String getColumnName(int column) {
             return columns[column];
         }
-    }
-}
+        
+}}
