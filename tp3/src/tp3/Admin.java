@@ -10,9 +10,11 @@ public class Admin extends Utilisateur {
 	
 	public static boolean verifier_mdp(String adr,String mdp) throws SQLException {
 		
-		Statement st=c.createStatement();
-		ResultSet rs=st.executeQuery("select mot_de_passe from client where login = "+adr);
-		if (rs.next()) return true;
+		
+		String query = "SELECT mot_de_passe FROM admin WHERE login = ?";
+		PreparedStatement preparedStatement = c.prepareStatement(query);
+		preparedStatement.setString(1, adr);
+		ResultSet rs = preparedStatement.executeQuery();		if (rs.next()) return true;
 		else return false;
 			
 }

@@ -5,6 +5,7 @@ import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,22 +22,29 @@ public class GUIClient {
 
     /**
      * Create the application.
+     * @param string 
      * @wbp.parser.entryPoint
      */
-    public GUIClient() {
-        initialize();
+    public GUIClient(String s,String name) {
+        try {
+			initialize(s, name);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     /**
      * Initialize the contents of the frame.
+     * @throws SQLException 
      */
-    private void initialize() {
-        List<String[]> bookData = new ArrayList<>();
-        // Example book data
-        bookData.add(new String[]{"ISBN1", "Title 1", "Author 1", "2000", "10"});
-        bookData.add(new String[]{"ISBN2", "Title 2", "Author 2", "2001", "15"});
-        bookData.add(new String[]{"ISBN3", "Title 3", "Author 3", "2002", "20"});
-
+    private void initialize(String s,String name) throws SQLException {
+        
+        ArrayList<String[]> bookData = Utilisateur.affiche_liste();
+        if (s != null) {
+        	System.out.println(s);
+        	bookData = Utilisateur.chercher_livre(s);
+        }
         frame = new JFrame();
         frame.setBounds(100, 100, 900, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -111,7 +119,7 @@ public class GUIClient {
     }
 
     public static void main(String[] args) {
-            new GUIClient();
+            new GUIClient(null,"amin.karray");
         
     }
 

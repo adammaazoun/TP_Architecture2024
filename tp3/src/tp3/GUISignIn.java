@@ -7,6 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.awt.event.ActionEvent;
 
 public class GUISignIn {
 
@@ -76,6 +79,23 @@ public class GUISignIn {
 		textField_1.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Next");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if(Client.verifier_mdp(textField.getText(), textField_1.getText())) {
+						GUIClient n=new GUIClient(null,textField.getText());
+					}
+					else {
+						GUISignIn m=new GUISignIn();
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+                // Action to perform when "Next" button is clicked
+            }
+			
+		});
 		btnNewButton.setBounds(219, 175, 89, 23);
 		frame.getContentPane().add(btnNewButton);
 		
