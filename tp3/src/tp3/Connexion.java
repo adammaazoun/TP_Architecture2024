@@ -6,7 +6,7 @@ public class Connexion{
 	public static Connection connect() {
 		Connection con=null;
 		try {
-			String url="jdbc:MySQL://localhost:3306/mybd";
+			String url="jdbc:MySQL://localhost:3306/basearchitecture";
 			String login="root";
 		    String mdp="1234";
 		    
