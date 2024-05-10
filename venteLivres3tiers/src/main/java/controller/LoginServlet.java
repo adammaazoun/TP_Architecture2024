@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
+
 import model.Client;
 
 /**
@@ -35,15 +37,27 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String login = request.getParameter("login");
+		String login = request.getParameter("nom");
 		String mdp = request.getParameter("mdp");
-		if (Client.verifClient(login,mdp)) {
-			response.sendRedirect("DisplayClientServlet");
-			
-		}
-		else {
-			response.getWriter().write("wrong credentials");
-			request.getRequestDispatcher("index.html").include(request,response);
+		System.out.println(login);
+		try {
+			if (Client.verifClient(login,mdp)) {
+				response.sendRedirect("HomeClient.jsp?search=newClient&login="+login);
+				
+			}
+			else {
+				response.getWriter().write("wrong credentials");
+				request.getRequestDispatcher("index.html").include(request,response);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

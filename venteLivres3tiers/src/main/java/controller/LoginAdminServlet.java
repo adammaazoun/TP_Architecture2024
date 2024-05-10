@@ -5,21 +5,21 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Client;
+import model.Admin;
 
 import java.io.IOException;
 
 /**
- * Servlet implementation class SignupServlet
+ * Servlet implementation class LoginAdminServlet
  */
-@WebServlet("/SignupServlet")
-public class SignupServlet extends HttpServlet {
+@WebServlet("/LoginAdminServlet")
+public class LoginAdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SignupServlet() {
+    public LoginAdminServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,20 +36,14 @@ public class SignupServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = request.getParameter("mail");
-		String nom = request.getParameter("nom");
-		String mdp1 = request.getParameter("mdp");
-		String mdp2 = request.getParameter("vmdp");
-		System.out.println(email);
-		System.out.println(nom);
-		System.out.println(mdp1);
-		System.out.println(mdp2);
-		if(mdp1.equals(mdp2)) {
-			Client.ajoutClient(nom,mdp1);
-			request.getRequestDispatcher("index.html").forward(request, response);
+		String login = request.getParameter("nom");
+		String mdp = request.getParameter("mdp");
+		if(Admin.verifAdmin(login, mdp)) {
+			response.sendRedirect("HomeAdmin.jsp?search=newClient&login="+login);
 		}
 		else {
-			request.getRequestDispatcher("Signup.html").forward(request, response);
+			response.getWriter().write("wrong credentials");
+			request.getRequestDispatcher("LoginAdmin.html").include(request,response);
 		}
 	}
 
